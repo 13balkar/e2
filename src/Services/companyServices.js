@@ -33,5 +33,13 @@ const getCompaniesBySector = async (Sector) => {
   return companies;
 };
 
+const updateCompany = async (id, body) => {
+  const companyToUpdate = await company.findOne({ where: { companyId: id } });
+  if (!companyToUpdate) {
+    throw new HttpError('Company not found', 404);
+  }
+  const updatedCompany = await companyToUpdate.update(body);
+  return await company.findOne({ where: { companyId: updatedCompany.companyId }, attributes: ['companyId', 'companyName', 'ceoName', 'sector', 'score'] });
+};
 
-module.exports = { saveCompanies, getCompaniesBySector };
+module.exports = { saveCompanies, getCompaniesBySector, updateCompany };

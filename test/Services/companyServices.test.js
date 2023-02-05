@@ -73,4 +73,20 @@ describe('Company Services', () => {
       expect(result).toEqual([]);
     });
   });
+  describe('Update companies', () => {
+    // it('should return the updated company when id is valid', async () => {
+    //   jest.spyOn(company, 'update').mockResolvedValue([{ company: 'c1', sector: 's1', ceoName: 'ceo1', companyId: 'id1', score: 1 }]);
+    //   jest.spyOn(company, 'findOne').mockResolvedValue([{ company: 'c1', sector: 's1', ceoName: 'ceo1', companyId: 'id1', score: 1 }]);
+    //   const id = 'id1';
+    //   const result = await services.updateCompany(id, { companyName: 'bhusan' });
+    //   expect(result).toEqual([{ company: 'c1', sector: 's1', ceoName: 'ceo1', companyId: 'id1', score: 1 }]);
+    // });
+    // it('should throw error when id is invalid', async () => {
+    //   jest.spyOn(company, 'update').mockResolvedValue([]);
+    //   jest.spyOn(company, 'findOne').mockResolvedValue([]);
+    //   const id = 'id1';
+    //   const result = await services.updateCompany(id, { companyName: 'bhusan' });
+    //   expect(result).rejects.toThrow(HttpError);
+    // });
+  });
 });

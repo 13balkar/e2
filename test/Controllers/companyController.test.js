@@ -54,4 +54,23 @@ describe('Company Controller', () => {
       expect(mockRes.status().json).toBeCalledWith({ message: 'Internal Server Error' });
     });
   });
+  describe('update company', () => {
+    it('should update company', async () => {
+      const mockReq = { body: { companyName: 'abc' }, params: { id: 'a13s' } };
+      const mockRes = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+      jest.spyOn(services, 'updateCompany').mockResolvedValue({ name: 'abc', score: 12 });
+      await controller.updateCompany(mockReq, mockRes);
+      expect(mockRes.status).toBeCalledWith(200);
+      expect(mockRes.status().json).toBeCalledWith({ name: 'abc', score: 12 });
+    });
+    it('should throw intetnal server error when services throw an error', async () => {
+      const mockReq = { body: { name: 'abc' } };
+      const mockRes = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+      jest.spyOn(services, 'updateCompany').mockRejectedValue(new Error('Internal Server Error'));
+      await controller.updateCompany(mockReq, mockRes);
+      expect(mockRes.status).toBeCalledWith(500);
+      expect(mockRes.status().json).toBeCalledWith({ message: 'Internal Server Error' });
+    });
+
+  });
 });

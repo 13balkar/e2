@@ -59,4 +59,17 @@ describe('Company Validator', () => {
       expect(mockNext).toBeCalled();
     });
   });
+  describe('validate company', () => {
+    it('should call next when company name and ceo name are valid', () => {
+      const mockReq = { body: { companyName: 'abc' } };
+      const mockRes = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+      const mockNext = jest.fn();
+      middleware.validateCompany(mockReq, mockRes, mockNext);
+      expect(mockRes.status).not.toBeCalled();
+      expect(mockRes.status().json).not.toBeCalled();
+      expect(mockNext).toBeCalled();
+    });
+
+  });
+
 });
