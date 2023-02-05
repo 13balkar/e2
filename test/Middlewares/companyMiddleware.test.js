@@ -30,4 +30,33 @@ describe('Company Validator', () => {
       expect(mockNext).not.toBeCalled();
     });
   });
+  describe('validate sector', () => {
+    it('should return an error when sector is not provided', () => {
+      const mockReq = { query: {} };
+      const mockRes = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+      const mockNext = jest.fn();
+      middleware.validateSector(mockReq, mockRes, mockNext);
+      expect(mockRes.status).toBeCalledWith(400);
+      expect(mockRes.status().json).toBeCalledWith({ error: '"sector" is required' });
+      expect(mockNext).not.toBeCalled();
+    });
+    it('should return an error when sector is not string', () => {
+      const mockReq = { query: { sector: 123 } };
+      const mockRes = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+      const mockNext = jest.fn();
+      middleware.validateSector(mockReq, mockRes, mockNext);
+      expect(mockRes.status).toBeCalledWith(400);
+      expect(mockRes.status().json).toBeCalledWith({ error: '"sector" must be a string' });
+      expect(mockNext).not.toBeCalled();
+    });
+    it('should call next when sector is valid', () => {
+      const mockReq = { query: { sector: 'abc' } };
+      const mockRes = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+      const mockNext = jest.fn();
+      middleware.validateSector(mockReq, mockRes, mockNext);
+      expect(mockRes.status).not.toBeCalled();
+      expect(mockRes.status().json).not.toBeCalled();
+      expect(mockNext).toBeCalled();
+    });
+  });
 });

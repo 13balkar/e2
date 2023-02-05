@@ -59,4 +59,18 @@ describe('Company Services', () => {
 
 
   });
+  describe('Get companies information by sector', () => {
+    it('should return an array of companies when sector is valid', async () => {
+      jest.spyOn(company, 'findAll').mockResolvedValue([{ company: 'c1', sector: 's1', ceoName: 'ceo1', companyId: 'id1', score: 1 }]);
+      const sector = 's1';
+      const result = await services.getCompaniesBySector(sector);
+      expect(result).toEqual([{ company: 'c1', sector: 's1', ceoName: 'ceo1', companyId: 'id1', score: 1 }]);
+    });
+    it('should throw error when sector is invalid', async () => {
+      jest.spyOn(company, 'findAll').mockResolvedValue([]);
+      const sector = 's1';
+      const result = await services.getCompaniesBySector(sector);
+      expect(result).toEqual([]);
+    });
+  });
 });

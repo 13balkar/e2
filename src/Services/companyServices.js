@@ -1,6 +1,7 @@
 const utitlity = require('../Utils/companyUtilities');
 const { company } = require('../../database/models');
 const HttpError = require('../../errors/HttpErrors');
+
 const saveCompanies = async (url) => {
   const detailsInCsv = await utitlity.fetchDetails(url);
   const detailsInJson = await utitlity.convertCsvToJson(detailsInCsv);
@@ -23,8 +24,14 @@ const saveCompanies = async (url) => {
     throw new HttpError('Failed to create companies', 404);
   }
   return createdCompanies;
-
-
 };
 
-module.exports = { saveCompanies };
+const getCompaniesBySector = async (Sector) => {
+  const companies = await company.findAll({
+    where: { sector: Sector }, attributes: ['companyId', 'companyName', 'ceoName', 'sector', 'score'], order: [['score', 'DESC']]
+  });
+  return companies;
+};
+
+
+module.exports = { saveCompanies, getCompaniesBySector };
